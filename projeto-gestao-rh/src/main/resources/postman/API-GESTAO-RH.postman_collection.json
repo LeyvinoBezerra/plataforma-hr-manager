@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "75c7ca2e-fca0-4aa9-b963-f5861faac59b",
+		"_postman_id": "67f80c10-f51c-4471-8f76-b9054e5fcaa3",
 		"name": "API-GESTAO-RH",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "5646977",
-		"_collection_link": "https://lively-flare-6722-1.postman.co/workspace/GRH-API~82515008-3938-4077-9111-ba4efdec66d4/collection/5646977-75c7ca2e-fca0-4aa9-b963-f5861faac59b?action=share&source=collection_link&creator=5646977"
+		"_collection_link": "https://lively-flare-6722-1.postman.co/workspace/GRH-API~82515008-3938-4077-9111-ba4efdec66d4/collection/5646977-67f80c10-f51c-4471-8f76-b9054e5fcaa3?action=share&source=collection_link&creator=5646977"
 	},
 	"item": [
 		{
@@ -16,12 +16,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/funcionarios/listarTodos",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/funcionarios/listarTodos",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -38,12 +36,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/funcionarios/buscarPorId?id=10",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/funcionarios/buscarPorId?id=10",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -75,12 +71,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/funcionarios/salvar",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/funcionarios/salvar",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -106,12 +100,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/funcionarios/atualizar",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/funcionarios/atualizar",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -128,16 +120,149 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/funcionarios/excluir?id=10",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/funcionarios/excluir?id=10",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
 								"funcionarios",
+								"excluir"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Perfil",
+			"item": [
+				{
+					"name": "buscar_todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/perfil/listarTodos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfil",
+								"listarTodos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar_por_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/perfil/buscarPorId?id=10",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfil",
+								"buscarPorId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": null,\n    \"nome\": \"ADMINISTRADOR\",\n    \"permissoes\": \"ADMIN\",\n    \"acessoGlobal\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/perfil/salvar",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfil",
+								"salvar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"nome\": \"ADMINISTRADOR\",\n    \"permissoes\": \"ADMIN\",\n    \"acessoGlobal\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/perfil/atualizar",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfil",
+								"atualizar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/perfil/excluir?id=10",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfil",
 								"excluir"
 							],
 							"query": [
@@ -161,12 +286,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/pessoas/listarTodas",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/pessoas/listarTodas",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -183,12 +306,10 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/pessoas/buscarPorId?id=1",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/pessoas/buscarPorId?id=1",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -220,12 +341,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/pessoas/salvar",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/pessoas/salvar",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -251,12 +370,10 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/v1/pessoas/atualizar",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/pessoas/atualizar",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -273,12 +390,10 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/v1/pessoas/excluir?id=2",
-							"protocol": "http",
+							"raw": "{{baseURL}}/api/v1/pessoas/excluir?id=2",
 							"host": [
-								"localhost"
+								"{{baseURL}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"v1",
@@ -296,6 +411,13 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
 		}
 	]
 }

@@ -1,14 +1,8 @@
 package br.edu.ufersa.rh.domain.dtos.perfil.resquest;
 
-import br.edu.ufersa.rh.domain.dtos.pessoa.request.PessoaPutRequest;
-import br.edu.ufersa.rh.domain.enums.StatusEnum;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import br.edu.ufersa.rh.domain.enums.PermissaoEnum;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,27 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PerfilPutRequest {
 
-    @NotNull(message = "O campo 'pessoa' é obrigatório.")
-    private Long id;
+    @NotNull(message = "O campo 'nome' é obrigatório.")
+    private String nome;
 
-    @NotNull(message = "O campo 'pessoa' é obrigatório.")
-    private PessoaPutRequest pessoa;
+    @NotNull(message = "O campo 'permissao' é obrigatório.")
+    private PermissaoEnum permissoes;
 
-    private String email;
-
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataAdmissao;
-
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataDemissao;
-
-    private StatusEnum status;
-
-    private String tipoContrato;
-
-    private BigDecimal salarioBase;
-
-    private LocalDateTime dataCriacao;
-
-    private Integer numeroVersao;
+    private Boolean acessoGlobal;
 }

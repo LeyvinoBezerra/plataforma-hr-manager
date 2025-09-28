@@ -1,11 +1,13 @@
 package br.edu.ufersa.rh.domain.dtos.perfil.response;
 
 import br.edu.ufersa.rh.domain.dtos.pessoa.response.PessoaPutResponse;
+import br.edu.ufersa.rh.domain.enums.PermissaoEnum;
 import br.edu.ufersa.rh.domain.enums.StatusEnum;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,17 +18,15 @@ public class PerfilPutResponse {
 
     private Long id;
 
-    private PessoaPutResponse pessoa;
+    private String nome;
 
-    private String email;
+    private PermissaoEnum permissoes;
 
-    private LocalDate dataAdmissao;
+    private Boolean acessoGlobal;
 
-    private LocalDate dataDemissao;
+    private LocalDateTime dataCriacao;
 
-    private StatusEnum status;
+    private LocalDateTime dataAtualizacao;
 
-    private String tipoContrato;
-
-    private BigDecimal salarioBase;
+    private Integer numeroVersao;
 }

@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(EnderecoController.API_V1_EnderecoS)
+@RequestMapping(EnderecoController.API_V_1_ENDERECOS)
 @AllArgsConstructor
 @Log4j2
 public class EnderecoController {
 
-    public static final String API_V1_EnderecoS = "/api/v1/enderecos";
+    public static final String API_V_1_ENDERECOS = "/api/v1/enderecos";
     private static final String SALVAR = "salvar";
     private static final String ATUALIZAR = "atualizar";
     private static final String EXCLUIR = "excluir";

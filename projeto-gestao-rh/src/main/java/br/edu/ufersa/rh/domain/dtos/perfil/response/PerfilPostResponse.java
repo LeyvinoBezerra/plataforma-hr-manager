@@ -1,8 +1,11 @@
 package br.edu.ufersa.rh.domain.dtos.perfil.response;
 
 import br.edu.ufersa.rh.domain.entity.Pessoa;
+import br.edu.ufersa.rh.domain.enums.PermissaoEnum;
 import br.edu.ufersa.rh.domain.enums.StatusEnum;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -13,9 +16,15 @@ public class PerfilPostResponse {
 
     private Long id;
 
-    private Pessoa pessoa;
+    private String nome;
 
-    private String email;
+    private PermissaoEnum permissoes;
 
-    private StatusEnum status;
+    private Boolean acessoGlobal;
+
+    private LocalDateTime dataCriacao;
+
+    private LocalDateTime dataAtualizacao;
+
+    private Integer numeroVersao;
 }

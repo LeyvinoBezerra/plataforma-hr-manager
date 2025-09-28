@@ -47,4 +47,5 @@ public class Perfil {
     @Version
     @Column(name = "per_numero_versao", nullable = false)
     private Integer numeroVersao;
+
 }

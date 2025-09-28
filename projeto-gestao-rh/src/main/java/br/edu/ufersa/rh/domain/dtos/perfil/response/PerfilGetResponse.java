@@ -1,11 +1,8 @@
 package br.edu.ufersa.rh.domain.dtos.perfil.response;
 
-import br.edu.ufersa.rh.domain.dtos.pessoa.response.PessoaGetResponse;
-import br.edu.ufersa.rh.domain.enums.StatusEnum;
+import br.edu.ufersa.rh.domain.enums.PermissaoEnum;
 import lombok.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,19 +14,11 @@ public class PerfilGetResponse {
 
     private Long id;
 
-    private PessoaGetResponse pessoa;
+    private String nome;
 
-    private String email;
+    private PermissaoEnum permissoes;
 
-    private LocalDate dataAdmissao;
-
-    private LocalDate dataDemissao;
-
-    private StatusEnum status;
-
-    private String tipoContrato;
-
-    private BigDecimal salarioBase;
+    private Boolean acessoGlobal;
 
     private LocalDateTime dataCriacao;
 

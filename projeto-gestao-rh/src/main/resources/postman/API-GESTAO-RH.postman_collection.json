@@ -1,0 +1,301 @@
+{
+	"info": {
+		"_postman_id": "75c7ca2e-fca0-4aa9-b963-f5861faac59b",
+		"name": "API-GESTAO-RH",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5646977",
+		"_collection_link": "https://lively-flare-6722-1.postman.co/workspace/GRH-API~82515008-3938-4077-9111-ba4efdec66d4/collection/5646977-75c7ca2e-fca0-4aa9-b963-f5861faac59b?action=share&source=collection_link&creator=5646977"
+	},
+	"item": [
+		{
+			"name": "Funcionarios",
+			"item": [
+				{
+					"name": "buscar_todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/funcionarios/listarTodos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"funcionarios",
+								"listarTodos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar_por_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/funcionarios/buscarPorId?id=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"funcionarios",
+								"buscarPorId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": null,\n    \"pessoa\": {\"id\": 1 },\n    \"email\": \"evelynantoniafernandes@avantii.com.br\",\n    \"dataAdmissao\": \"01/01/2025\",\n    \"status\": \"ATIVO\",\n    \"tipoContrato\": \"CLT\",\n    \"salarioBase\": \"255200\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/funcionarios/salvar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"funcionarios",
+								"salvar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 10,\n    \"pessoa\": {\"id\": 1 },\n    \"email\": \"evelynantoniafernandes@avantii.com.br\",\n    \"dataAdmissao\": \"01/01/2025\",\n    \"status\": \"ATIVO\",\n    \"tipoContrato\": \"CLT\",\n    \"salarioBase\": \"255255\",\n    \"numeroVersao\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/funcionarios/atualizar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"funcionarios",
+								"atualizar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/funcionarios/excluir?id=10",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"funcionarios",
+								"excluir"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pessoas",
+			"item": [
+				{
+					"name": "buscar_todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/pessoas/listarTodas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"pessoas",
+								"listarTodas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar_por_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/pessoas/buscarPorId?id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"pessoas",
+								"buscarPorId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\n//     \"id\": null,\n//     \"cpf\": \"13158199459\",\n//     \"nomeCompleto\": \"Igor Ian Gonçalves\",\n//     \"dataNascimento\": \"27/04/1996\",\n//     \"sexo\": \"MASCULINO\",\n//     \"nomeDaMae\": \"Priscila Tatiane Jennifer\",\n//     \"nomeDoPai\": \"Gustavo Matheus Cauê Gonçalves\",\n//     \"pis\": \"79764128617\",\n//     \"rg\": \"261446204\",\n//     \"rgOrgaoEmissor\": \"SSP\",\n//     \"rgUfEmissor\": \"SE\",\n//     \"nacionalidade\": \"Brasileira\"\n// }\n\n// {\n//     \"id\": null,\n//     \"cpf\": \"36186037037\",\n//     \"nomeCompleto\": \"Bruna Márcia Marlene Carvalho\",\n//     \"dataNascimento\": \"27/01/1958\",\n//     \"sexo\": \"FEMININO\",\n//     \"nomeDaMae\": \"Luana Josefa\",\n//     \"nomeDoPai\": \"Gabriel José Nathan Carvalho\",\n//     \"pis\": \"67982478578\",\n//     \"rg\": \"407260043\",\n//     \"rgOrgaoEmissor\": \"SSP\",\n//     \"rgUfEmissor\": \"RO\",\n//     \"nacionalidade\": \"Brasileira\"\n//   }\n\n{\n    \"id\": null,\n    \"cpf\": \"29863265284\",\n    \"nomeCompleto\": \"Rafael Rodrigo Caldeira\",\n    \"dataNascimento\": \"12/03/1963\",\n    \"sexo\": \"MASCULINO\",\n    \"nomeDaMae\": \"Sabrina Daniela\",\n    \"nomeDoPai\": \"Antonio Henry Caldeira\",\n    \"pis\": \"24152472816\",\n    \"rg\": \"108566638\",\n    \"rgOrgaoEmissor\": \"SSP\",\n    \"rgUfEmissor\": \"RO\",\n    \"nacionalidade\": \"Brasileira\"\n  }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/pessoas/salvar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"pessoas",
+								"salvar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"cpf\": \"13158199459\",\n    \"nomeCompleto\": \"Igor Ian Gonçalves Santos\",\n    \"dataNascimento\": \"1996-04-27\",\n    \"sexo\": \"MASCULINO\",\n    \"nomeDaMae\": \"Priscila Tatiane Jennifer\",\n    \"nomeDoPai\": \"Gustavo Matheus Cauê Gonçalves\",\n    \"pis\": \"79764128617\",\n    \"rg\": \"261446204\",\n    \"rgOrgaoEmissor\": \"SSP\",\n    \"rgUfEmissor\": \"SE\",\n    \"nacionalidade\": \"Brasileira\",\n    \"numeroVersao\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/pessoas/atualizar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"pessoas",
+								"atualizar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/pessoas/excluir?id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"pessoas",
+								"excluir"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

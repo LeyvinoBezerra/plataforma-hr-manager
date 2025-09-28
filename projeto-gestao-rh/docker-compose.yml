@@ -1,0 +1,39 @@
+
+version: '3.8'
+services:
+  gestaorh:
+    image: postgres:17-alpine
+    container_name: gestaorh-db
+    restart: always
+    environment:
+      - POSTGRES_DB=gestaorh-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=gestaorh-db
+      - POSTGRES_PORT=5432
+    ports:
+      - 5432:5432
+    networks:
+      - network
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'teste@teste.com'
+      PGADMIN_DEFAULT_PASSWORD: '1234'
+    ports:
+      - 8081:80
+    volumes:
+      - ./servers.json:/pgadmin4/servers.json
+    networks:
+      - network
+
+volumes:
+  postgres-db-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data
+networks:
+  network:
+    driver: bridge

@@ -63,7 +63,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": null,\n    \"pessoa\": {\"id\": 1 },\n    \"email\": \"evelynantoniafernandes@avantii.com.br\",\n    \"dataAdmissao\": \"01/01/2025\",\n    \"status\": \"ATIVO\",\n    \"tipoContrato\": \"CLT\",\n    \"salarioBase\": \"255200\"\n}",
+							"raw": "{\n    \"id\": null,\n    \"pessoa\": {\"id\": 1 },\n    \"email\": \"igor.goncalves@avanti.com.br\",\n    \"dataAdmissao\": \"01/01/2025\",\n    \"status\": \"ATIVO\",\n    \"tipoContrato\": \"CLT\",\n    \"salarioBase\": \"3500\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -143,7 +143,7 @@
 			]
 		},
 		{
-			"name": "Perfil",
+			"name": "enderecos",
 			"item": [
 				{
 					"name": "buscar_todos",
@@ -151,14 +151,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/api/v1/perfil/listarTodos",
+							"raw": "{{baseURL}}/api/v1/enderecos/listarTodos",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"perfil",
+								"enderecos",
 								"listarTodos"
 							]
 						}
@@ -171,20 +171,20 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/api/v1/perfil/buscarPorId?id=10",
+							"raw": "{{baseURL}}/api/v1/enderecos/buscarPorId?id=1",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"perfil",
+								"enderecos",
 								"buscarPorId"
 							],
 							"query": [
 								{
 									"key": "id",
-									"value": "10"
+									"value": "1"
 								}
 							]
 						}
@@ -198,7 +198,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": null,\n    \"nome\": \"ADMINISTRADOR\",\n    \"permissoes\": \"ADMIN\",\n    \"acessoGlobal\": true\n}",
+							"raw": "{\n    \"id\": null,\n    \"pessoa\": {\"id\": 1 },\n    \"logradouro\": \"Rua José Bento Ribeiro\",\n    \"bairro\": \"Cafezal\",\n    \"cep\": \"86045570\",\n    \"numero\": \"100\",\n    \"complemento\": \"Endereço de residência\",\n    \"cidade\": \"Londrina\",\n    \"estado\": \"PR\",\n    \"enderecoPrincipal\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -206,14 +206,141 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/api/v1/perfil/salvar",
+							"raw": "{{baseURL}}/api/v1/enderecos",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"perfil",
+								"enderecos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"pessoa\": {\"id\": 1},\n    \"logradouro\": \"Rua José Bento Ribeiro\",\n    \"cep\": \"86045570\",\n    \"numero\": \"101\",\n    \"complemento\": \"Endereço de residência\",\n    \"bairro\": \"Cafezal\",\n    \"cidade\": \"Londrina\",\n    \"estado\": \"PR\",\n    \"enderecoPrincipal\": false,\n    \"numeroVersao\": 0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/enderecos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enderecos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/enderecos/10",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"enderecos",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Perfil",
+			"item": [
+				{
+					"name": "buscar_todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/perfis/listarTodos",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfis",
+								"listarTodos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar_por_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/v1/perfis/buscarPorId?id=6",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfis",
+								"buscarPorId"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "salvar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": null,\n    \"nome\": \"INTEGRADOR\",\n    \"permissoes\": \"INTEGRADOR\",\n    \"acessoGlobal\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/v1/perfis/salvar",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"perfis",
 								"salvar"
 							]
 						}
@@ -235,14 +362,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseURL}}/api/v1/perfil/atualizar",
+							"raw": "{{baseURL}}/api/v1/perfis/atualizar",
 							"host": [
 								"{{baseURL}}"
 							],
 							"path": [
 								"api",
 								"v1",
-								"perfil",
+								"perfis",
 								"atualizar"
 							]
 						}
@@ -255,14 +382,16 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseURL}}/api/v1/perfil/excluir?id=10",
+							"raw": "http://localhost:8080/api/v1/perfis/excluir?id=10",
+							"protocol": "http",
 							"host": [
-								"{{baseURL}}"
+								"localhost"
 							],
+							"port": "8080",
 							"path": [
 								"api",
 								"v1",
-								"perfil",
+								"perfis",
 								"excluir"
 							],
 							"query": [
@@ -333,7 +462,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\n//     \"id\": null,\n//     \"cpf\": \"13158199459\",\n//     \"nomeCompleto\": \"Igor Ian Gonçalves\",\n//     \"dataNascimento\": \"27/04/1996\",\n//     \"sexo\": \"MASCULINO\",\n//     \"nomeDaMae\": \"Priscila Tatiane Jennifer\",\n//     \"nomeDoPai\": \"Gustavo Matheus Cauê Gonçalves\",\n//     \"pis\": \"79764128617\",\n//     \"rg\": \"261446204\",\n//     \"rgOrgaoEmissor\": \"SSP\",\n//     \"rgUfEmissor\": \"SE\",\n//     \"nacionalidade\": \"Brasileira\"\n// }\n\n// {\n//     \"id\": null,\n//     \"cpf\": \"36186037037\",\n//     \"nomeCompleto\": \"Bruna Márcia Marlene Carvalho\",\n//     \"dataNascimento\": \"27/01/1958\",\n//     \"sexo\": \"FEMININO\",\n//     \"nomeDaMae\": \"Luana Josefa\",\n//     \"nomeDoPai\": \"Gabriel José Nathan Carvalho\",\n//     \"pis\": \"67982478578\",\n//     \"rg\": \"407260043\",\n//     \"rgOrgaoEmissor\": \"SSP\",\n//     \"rgUfEmissor\": \"RO\",\n//     \"nacionalidade\": \"Brasileira\"\n//   }\n\n{\n    \"id\": null,\n    \"cpf\": \"29863265284\",\n    \"nomeCompleto\": \"Rafael Rodrigo Caldeira\",\n    \"dataNascimento\": \"12/03/1963\",\n    \"sexo\": \"MASCULINO\",\n    \"nomeDaMae\": \"Sabrina Daniela\",\n    \"nomeDoPai\": \"Antonio Henry Caldeira\",\n    \"pis\": \"24152472816\",\n    \"rg\": \"108566638\",\n    \"rgOrgaoEmissor\": \"SSP\",\n    \"rgUfEmissor\": \"RO\",\n    \"nacionalidade\": \"Brasileira\"\n  }",
+							"raw": "// {\n//     \"id\": null,\n//     \"cpf\": \"13158199459\",\n//     \"nomeCompleto\": \"Igor Ian Gonçalves\",\n//     \"dataNascimento\": \"27/04/1996\",\n//     \"sexo\": \"MASCULINO\",\n//     \"nomeDaMae\": \"Priscila Tatiane Jennifer\",\n//     \"nomeDoPai\": \"Gustavo Matheus Cauê Gonçalves\",\n//     \"pis\": \"79764128617\",\n//     \"rg\": \"261446204\",\n//     \"rgOrgaoEmissor\": \"SSP\",\n//     \"rgUfEmissor\": \"SE\",\n//     \"nacionalidade\": \"Brasileira\"\n// }\n\n// {\n//     \"id\": null,\n//     \"cpf\": \"36186037037\",\n//     \"nomeCompleto\": \"Bruna Márcia Marlene Carvalho\",\n//     \"dataNascimento\": \"27/01/1958\",\n//     \"sexo\": \"FEMININO\",\n//     \"nomeDaMae\": \"Luana Josefa\",\n//     \"nomeDoPai\": \"Gabriel José Nathan Carvalho\",\n//     \"pis\": \"67982478578\",\n//     \"rg\": \"407260043\",\n//     \"rgOrgaoEmissor\": \"SSP\",\n//     \"rgUfEmissor\": \"RO\",\n//     \"nacionalidade\": \"Brasileira\"\n//   }\n\n// {\n//     \"id\": null,\n//     \"cpf\": \"29863265284\",\n//     \"nomeCompleto\": \"Rafael Rodrigo Caldeira\",\n//     \"dataNascimento\": \"12/03/1963\",\n//     \"sexo\": \"MASCULINO\",\n//     \"nomeDaMae\": \"Sabrina Daniela\",\n//     \"nomeDoPai\": \"Antonio Henry Caldeira\",\n//     \"pis\": \"24152472816\",\n//     \"rg\": \"108566638\",\n//     \"rgOrgaoEmissor\": \"SSP\",\n//     \"rgUfEmissor\": \"RO\",\n//     \"nacionalidade\": \"Brasileira\"\n//   }",
 							"options": {
 								"raw": {
 									"language": "json"

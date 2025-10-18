@@ -23,16 +23,13 @@ import java.util.List;
 public class FuncionarioController {
 
     public static final String API_V1_FUNCIONARIOS = "/api/v1/funcionarios";
-    private static final String SALVAR = "salvar";
-    private static final String ATUALIZAR = "atualizar";
-    private static final String EXCLUIR = "excluir";
     private static final String BUSCAR_POR_ID = "buscarPorId";
     private static final String LISTAR_TODOS = "listarTodos";
 
     private final FuncionarioService funcionarioService;
     private final FuncionarioMapper funcionarioMapper;
 
-    @PostMapping( SALVAR)
+    @PostMapping
     public ResponseEntity<FuncionarioPostResponse> salvar(@RequestBody @Valid FuncionarioPostRequest funcionario) {
         log.info("Salvando funcionario {}", funcionario);
 
@@ -44,7 +41,7 @@ public class FuncionarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping( ATUALIZAR)
+    @PutMapping
     public ResponseEntity<FuncionarioPutResponse> atualizar(@RequestBody @Valid FuncionarioPutRequest funcionario) {
         log.info("Atualizando funcionario {}", funcionario);
 
@@ -56,7 +53,7 @@ public class FuncionarioController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @DeleteMapping(EXCLUIR)
+    @DeleteMapping
     public ResponseEntity<Void> excluir(Long id) {
         log.info("Excluir funcionario {}", id);
 

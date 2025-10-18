@@ -25,7 +25,7 @@ public class Endereco {
     @Column(name = "end_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "end_pes_id", referencedColumnName = "pes_id")
     private Pessoa pessoa;
 

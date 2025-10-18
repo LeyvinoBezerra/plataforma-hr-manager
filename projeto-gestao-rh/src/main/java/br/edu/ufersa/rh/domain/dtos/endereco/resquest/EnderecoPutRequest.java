@@ -1,14 +1,9 @@
 package br.edu.ufersa.rh.domain.dtos.endereco.resquest;
 
 import br.edu.ufersa.rh.domain.dtos.pessoa.request.PessoaPutRequest;
-import br.edu.ufersa.rh.domain.enums.StatusEnum;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import br.edu.ufersa.rh.domain.entity.Pessoa;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,27 +12,29 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class EnderecoPutRequest {
 
-    @NotNull(message = "O campo 'pessoa' é obrigatório.")
+    @NotNull(message = "O campo 'id' é obrigatório.")
     private Long id;
 
     @NotNull(message = "O campo 'pessoa' é obrigatório.")
-    private PessoaPutRequest pessoa;
+    private Pessoa pessoa;
 
-    private String email;
+    @NotNull(message = "O campo 'logradouro' é obrigatório.")
+    private String logradouro;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataAdmissao;
+    @NotNull(message = "O campo 'cep' é obrigatório.")
+    private String cep;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataDemissao;
+    private String numero;
 
-    private StatusEnum status;
+    private String complemento;
 
-    private String tipoContrato;
+    private String bairro;
 
-    private BigDecimal salarioBase;
+    private String cidade;
 
-    private LocalDateTime dataCriacao;
+    private String estado;
+
+    private Boolean enderecoPrincipal;
 
     private Integer numeroVersao;
 }

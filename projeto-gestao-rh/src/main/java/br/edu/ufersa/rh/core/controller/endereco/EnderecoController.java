@@ -2,6 +2,7 @@ package br.edu.ufersa.rh.core.controller.endereco;
 
 
 import br.edu.ufersa.rh.core.service.funcionario.EnderecoService;
+import br.edu.ufersa.rh.core.service.pessoa.PessoaService;
 import br.edu.ufersa.rh.domain.dtos.endereco.response.EnderecoGetResponse;
 import br.edu.ufersa.rh.domain.dtos.endereco.response.EnderecoPostResponse;
 import br.edu.ufersa.rh.domain.dtos.endereco.response.EnderecoPutResponse;
@@ -24,16 +25,13 @@ import java.util.List;
 public class EnderecoController {
 
     public static final String API_V_1_ENDERECOS = "/api/v1/enderecos";
-    private static final String SALVAR = "salvar";
-    private static final String ATUALIZAR = "atualizar";
-    private static final String EXCLUIR = "excluir";
     private static final String BUSCAR_POR_ID = "buscarPorId";
     private static final String LISTAR_TODOS = "listarTodos";
 
     private final EnderecoService enderecoService;
     private final EnderecoMapper enderecoMapper;
 
-    @PostMapping( SALVAR)
+    @PostMapping
     public ResponseEntity<EnderecoPostResponse> salvar(@RequestBody @Valid EnderecoPostRequest endereco) {
         log.info("Salvando endereco {}", endereco);
 
@@ -45,9 +43,10 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping( ATUALIZAR)
+    @PutMapping
     public ResponseEntity<EnderecoPutResponse> atualizar(@RequestBody @Valid EnderecoPutRequest endereco) {
         log.info("Atualizando Endereco {}", endereco);
+
 
         var enderecoToUpdate = enderecoMapper.toEndereco(endereco);
         var updatedEndereco = enderecoService.atualizar(enderecoToUpdate);
@@ -57,8 +56,8 @@ public class EnderecoController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @DeleteMapping(EXCLUIR)
-    public ResponseEntity<Void> excluir(Long id) {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> excluir(@PathVariable Long id) {
         log.info("Excluir Endereco {}", id);
 
         enderecoService.excluir(id);

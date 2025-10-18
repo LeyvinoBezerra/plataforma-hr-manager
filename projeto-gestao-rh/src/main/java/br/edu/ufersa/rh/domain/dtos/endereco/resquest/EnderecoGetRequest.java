@@ -1,7 +1,6 @@
 package br.edu.ufersa.rh.domain.dtos.endereco.resquest;
 
-import br.edu.ufersa.rh.domain.dtos.pessoa.request.PessoaPostRequest;
-import br.edu.ufersa.rh.domain.enums.StatusEnum;
+import br.edu.ufersa.rh.domain.entity.Pessoa;
 import lombok.*;
 
 @Getter
@@ -13,9 +12,19 @@ public class EnderecoGetRequest {
 
     private Long id;
 
-    private PessoaPostRequest pessoa;
+    private Pessoa pessoa;
 
-    private String email;
+    private String logradouro;
 
-    private StatusEnum status;
+    private String cep;
+
+    private String numero;
+
+    private String complemento;
+
+    private String bairro;
+
+    private String cidade;
+
+    private String estado;
 }

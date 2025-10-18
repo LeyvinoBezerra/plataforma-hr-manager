@@ -1,11 +1,8 @@
 package br.edu.ufersa.rh.domain.dtos.endereco.response;
 
-import br.edu.ufersa.rh.domain.dtos.pessoa.response.PessoaGetResponse;
-import br.edu.ufersa.rh.domain.enums.StatusEnum;
+import br.edu.ufersa.rh.domain.entity.Pessoa;
 import lombok.*;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,19 +14,23 @@ public class EnderecoGetResponse {
 
     private Long id;
 
-    private PessoaGetResponse pessoa;
+    private Pessoa pessoa;
 
-    private String email;
+    private String logradouro;
 
-    private LocalDate dataAdmissao;
+    private String cep;
 
-    private LocalDate dataDemissao;
+    private String numero;
 
-    private StatusEnum status;
+    private String complemento;
 
-    private String tipoContrato;
+    private String bairro;
 
-    private BigDecimal salarioBase;
+    private String cidade;
+
+    private String estado;
+
+    private Boolean enderecoPrincipal;
 
     private LocalDateTime dataCriacao;
 

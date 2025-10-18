@@ -1,8 +1,9 @@
 package br.edu.ufersa.rh.domain.dtos.endereco.response;
 
 import br.edu.ufersa.rh.domain.entity.Pessoa;
-import br.edu.ufersa.rh.domain.enums.StatusEnum;
 import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,7 +16,21 @@ public class EnderecoPostResponse {
 
     private Pessoa pessoa;
 
-    private String email;
+    private String logradouro;
 
-    private StatusEnum status;
+    private String cep;
+
+    private String numero;
+
+    private String complemento;
+
+    private String bairro;
+
+    private String cidade;
+
+    private String estado;
+
+    private Boolean enderecoPrincipal;
+
+    private LocalDateTime dataCriacao;
 }

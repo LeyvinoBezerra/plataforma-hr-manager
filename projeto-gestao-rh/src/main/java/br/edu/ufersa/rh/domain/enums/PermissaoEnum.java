@@ -2,29 +2,29 @@ package br.edu.ufersa.rh.domain.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public enum PermissaoEnum {
 
     // Permissões de acesso gestao de usuários e perfis
-    GERENCIAR_USUARIOS("Gerenciar Usuários"),
-    GERENCIAR_PERFIS("Gerenciar Perfis"),
+    USUARIO("USUARIO"),
+    PERFIL("PERFIL"),
 
     // Permissões de acesso gestão de relatórios
-    GERENCIAR_RELATORIOS("Gerenciar Relatórios"),
+    REPORT("REPORT"),
 
     // Permissões de acesso gestão de configurações
-    GERENCIAR_CONFIGURACOES("Gerenciar Configurações"),
+    CONFIGURADOR("CONFIGURADOR"),
 
     // Permissões de acesso gestão de auditoria
-    GERENCIAR_AUDITORIA("Gerenciar Auditoria"),
+    AUDITOR("AUDITOR"),
 
     // Permissões de acesso gestão de integrações
-    GERENCIAR_INTEGRACOES("Gerenciar Integrações");
+    INTEGRADOR("INTEGRADOR"),
 
-    private String descricao;
+    //permissoes de admin
+    ADMIN("ADMIN");
 
+    private final String descricao;
 }

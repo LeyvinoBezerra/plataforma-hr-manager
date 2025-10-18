@@ -22,7 +22,7 @@ public interface PerfilMapper {
 
     PerfilPostResponse toPerfilPostResponse(Optional<Perfil> perfil);
 
-    PerfilGetResponse toPerfilGetResponse(Optional<Perfil> perfil);
+    PerfilGetResponse toPerfilGetResponse(Perfil perfil);
 
     PerfilPutResponse toPerfilPutResponse(Optional<Perfil> perfil);
 

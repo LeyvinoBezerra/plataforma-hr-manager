@@ -24,16 +24,13 @@ import java.util.List;
 public class PerfilController {
 
     public static final String API_V1_PERFIS = "/api/v1/perfis";
-    private static final String SALVAR = "salvar";
-    private static final String ATUALIZAR = "atualizar";
-    private static final String EXCLUIR = "excluir";
     private static final String BUSCAR_POR_ID = "buscarPorId";
     private static final String LISTAR_TODOS = "listarTodos";
 
     private final PerfilService perfilService;
     private final PerfilMapper perfilMapper;
 
-    @PostMapping( SALVAR)
+    @PostMapping
     public ResponseEntity<PerfilPostResponse> salvar(@RequestBody @Valid PerfilPostRequest perfil) {
         log.info("Salvando perfil {}", perfil);
 
@@ -45,7 +42,7 @@ public class PerfilController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    @PutMapping( ATUALIZAR)
+    @PutMapping
     public ResponseEntity<PerfilPutResponse> atualizar(@RequestBody @Valid PerfilPutRequest perfil) {
         log.info("Atualizando perfil {}", perfil);
 
@@ -57,7 +54,7 @@ public class PerfilController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @DeleteMapping(EXCLUIR)
+    @DeleteMapping
     public ResponseEntity<Void> excluir(Long id) {
         log.info("Excluir Perfl {}", id);
 
@@ -73,7 +70,7 @@ public class PerfilController {
         PerfilGetResponse perfilGetResponse;
 
         var perfil = perfilService.findById(id);
-        perfilGetResponse = perfilMapper.toPerfilGetResponse(perfil);
+        perfilGetResponse = perfilMapper.toPerfilGetResponse(perfil.get());
 
         return ResponseEntity.ok(perfilGetResponse);
     }

@@ -24,16 +24,13 @@ import java.util.List;
 public class PessoaController {
 
     public static final String API_V1_PESSOAS = "/api/v1/pessoas";
-    private static final String SALVAR = "salvar";
-    private static final String ATUALIZAR = "atualizar";
-    private static final String EXCLUIR = "excluir";
     private static final String BUSCAR_POR_ID = "buscarPorId";
     private static final String LISTAR_TODAS = "listarTodas";
 
     private final PessoaService pessoaService;
     private final PessoaMapper pessoaMapper;
 
-    @PostMapping(SALVAR)
+    @PostMapping
     public ResponseEntity<PessoaPostResponse> save(@RequestBody @Valid PessoaPostRequest pessoaToSave) {
         log.info("Iniciando o processo de salvar uma nova pessoa: {}", pessoaToSave);
 
@@ -45,7 +42,7 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(pessoaPostResponse);
     }
 
-    @PutMapping(ATUALIZAR)
+    @PutMapping
     public ResponseEntity<PessoaPutResponse> update(@RequestBody @Valid PessoaPutRequest pessoaToSave) {
         log.info("Iniciando o processo de atualizar uma pessoa: {}", pessoaToSave);
 
@@ -57,7 +54,7 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaPutResponse);
     }
     
-    @DeleteMapping(EXCLUIR)
+    @DeleteMapping
     public ResponseEntity<Void> delete(@RequestParam @Valid Long id) {
         log.info("Iniciando o processo de exclusão da pessoa com ID: {}", id);
 

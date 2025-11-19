@@ -1,0 +1,3 @@
+Instalação postgresql 17:
+usuario:postgres
+senha:1234

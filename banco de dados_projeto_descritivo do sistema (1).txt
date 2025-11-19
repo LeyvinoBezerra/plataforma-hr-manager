@@ -1,0 +1,29 @@
+Projeto de banco de dados - Gestão RH
+Área de negócio: empresas gestão de pessoas.
+Requisitos essenciais do sistema:
+O sistema possui a finalidade de gerenciar o dia a dia do setor de Recursos Humanos - RH.
+Ele é fundamental para que seja realizado cadastros, atualizações, remoções e buscas de
+colaboradores da empresa, por este motivo o sistema possui alguns requisitos funcionais tais como:
+- Cada funcionário tem seu cadastro realizado somente uma vez, cada cadastro utiliza o CPF para
+ identificação única não podemos ter dois colaboradores com o mesmo CPF.
+- Cada funcionário possui um endereço vinculado ao seu cadastro.
+- Cada funcionário possui um plano de carreira que atualiza a cada aniversário de empresa.
+- O sistema possui recursos automatizamos de relatórios e validações.
+
+
+Entidades para modelagem do sistema: modelar o banco de dados conceitual e lógico.
+1) Funcionário; (gerar pessoa completa)
+2) Endereço;
+3) Plano de carreira;
+4) Usuário;
+5) Perfil.
+
+Tecnologias no projeto:
+1) Banco de dados - Postgres; ok.
+2) Linguagem Java 21 LTS; Estrutura arquitetura REST FULL - Monolítico - Cliente Servidor.
+ 2.1) Estrutura MVC(Controller/Services/Respositórios).
+ 2.2) Spring Boot 3.x e Spring Security 6.
+3) Framework Web: Spring Framework: spring boot, security, Web, Data, JPA.
+4) Jasper Report: PDF e relatórios.
+5) ReactJs 19 - NodeJs 21 LTS.
+6) Docker - docker compose.

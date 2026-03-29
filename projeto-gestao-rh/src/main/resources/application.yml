@@ -26,4 +26,4 @@ spring:
     init:
       mode: always
       continue-on-error: true
-      platform: postgresql
+      platform: postgres

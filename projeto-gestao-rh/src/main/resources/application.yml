@@ -27,3 +27,8 @@ spring:
       mode: always
       continue-on-error: true
       platform: postgresql
+
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:57135971194814649} # genetate a strong secret key for production
+  expiration: ${JWT_EXPIRATION:3600000} # 1 hour in milliseconds

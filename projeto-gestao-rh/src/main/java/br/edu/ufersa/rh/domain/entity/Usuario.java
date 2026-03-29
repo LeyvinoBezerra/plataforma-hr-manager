@@ -32,11 +32,14 @@ public class Usuario {
     @ToString.Exclude
     private Funcionario funcionario;
 
-    @Column(name = "usu_login", nullable = false, unique = true)
-    private String login;
+    @Column(name = "usu_username", nullable = false, unique = true)
+    private String username;
 
-    @Column(name = "usu_senha_hash", nullable = false)
-    private String senha;
+    @Column(name = "usu_password", nullable = false)
+    private String password;
+
+    @Column(name = "usu_role", nullable = false)
+    private String role;
 
     @Column(name = "usu_ativo", nullable = false)
     private Boolean ativo;
@@ -54,7 +57,13 @@ public class Usuario {
 
     @Version
     @Column(name = "usu_versao", nullable = false)
-    private Integer numeroVersao;
+    private Integer versao;
+
+    public Usuario(String username, String password, String role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
     @Override
     public final boolean equals(Object o) {

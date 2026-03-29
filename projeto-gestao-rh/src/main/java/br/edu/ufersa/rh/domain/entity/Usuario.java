@@ -5,16 +5,17 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @ToString
 @EntityListeners(AuditingEntityListener.class)
 @Entity
@@ -28,6 +29,7 @@ public class Usuario {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usu_fun_id", referencedColumnName = "fun_id")
+    @ToString.Exclude
     private Funcionario funcionario;
 
     @Column(name = "usu_login", nullable = false, unique = true)
@@ -43,7 +45,7 @@ public class Usuario {
     private LocalDateTime ultimoAcesso;
 
     @CreationTimestamp
-    @Column(name = "usu_data_criacao", nullable = false)
+    @Column(name = "usu_data_criacao")
     private LocalDateTime dataCriacao;
 
     @UpdateTimestamp
@@ -53,4 +55,20 @@ public class Usuario {
     @Version
     @Column(name = "usu_versao", nullable = false)
     private Integer numeroVersao;
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        Usuario usuario = (Usuario) o;
+        return getId() != null && Objects.equals(getId(), usuario.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
+    }
 }

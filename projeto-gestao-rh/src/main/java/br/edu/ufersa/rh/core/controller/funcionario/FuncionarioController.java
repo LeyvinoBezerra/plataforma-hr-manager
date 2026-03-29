@@ -7,6 +7,7 @@ import br.edu.ufersa.rh.domain.dtos.funcionario.response.FuncionarioPutResponse;
 import br.edu.ufersa.rh.domain.dtos.funcionario.resquest.FuncionarioPostRequest;
 import br.edu.ufersa.rh.domain.dtos.funcionario.resquest.FuncionarioPutRequest;
 import br.edu.ufersa.rh.domain.mappers.FuncionarioMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -20,6 +21,7 @@ import java.util.List;
 @RequestMapping(FuncionarioController.API_V1_FUNCIONARIOS)
 @AllArgsConstructor
 @Log4j2
+@Tag(name = "Funcionários", description = "Endpoints para gerenciamento de funcionários")
 public class FuncionarioController {
 
     public static final String API_V1_FUNCIONARIOS = "/api/v1/funcionarios";

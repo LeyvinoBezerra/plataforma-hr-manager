@@ -8,6 +8,7 @@ import br.edu.ufersa.rh.domain.dtos.perfil.response.PerfilPutResponse;
 import br.edu.ufersa.rh.domain.dtos.perfil.resquest.PerfilPostRequest;
 import br.edu.ufersa.rh.domain.dtos.perfil.resquest.PerfilPutRequest;
 import br.edu.ufersa.rh.domain.mappers.PerfilMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequestMapping(PerfilController.API_V1_PERFIS)
 @AllArgsConstructor
 @Log4j2
+@Tag(name = "Perfis", description = "Endpoints para gerenciamento de perfis de acesso dos usuários")
 public class PerfilController {
 
     public static final String API_V1_PERFIS = "/api/v1/perfis";

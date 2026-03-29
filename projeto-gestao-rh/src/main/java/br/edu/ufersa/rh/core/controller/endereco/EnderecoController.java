@@ -2,13 +2,13 @@ package br.edu.ufersa.rh.core.controller.endereco;
 
 
 import br.edu.ufersa.rh.core.service.funcionario.EnderecoService;
-import br.edu.ufersa.rh.core.service.pessoa.PessoaService;
 import br.edu.ufersa.rh.domain.dtos.endereco.response.EnderecoGetResponse;
 import br.edu.ufersa.rh.domain.dtos.endereco.response.EnderecoPostResponse;
 import br.edu.ufersa.rh.domain.dtos.endereco.response.EnderecoPutResponse;
 import br.edu.ufersa.rh.domain.dtos.endereco.resquest.EnderecoPostRequest;
 import br.edu.ufersa.rh.domain.dtos.endereco.resquest.EnderecoPutRequest;
 import br.edu.ufersa.rh.domain.mappers.EnderecoMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,6 +22,7 @@ import java.util.List;
 @RequestMapping(EnderecoController.API_V_1_ENDERECOS)
 @AllArgsConstructor
 @Log4j2
+@Tag(name = "Endereços", description = "Endpoints para gerenciamento de endereços dos funcionários")
 public class EnderecoController {
 
     public static final String API_V_1_ENDERECOS = "/api/v1/enderecos";

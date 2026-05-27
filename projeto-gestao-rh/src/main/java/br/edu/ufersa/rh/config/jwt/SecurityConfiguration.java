@@ -1,28 +1,30 @@
 package br.edu.ufersa.rh.config.jwt;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
+
+    private static final String[] WHITE_LIST = {"/swagger-ui/index.html", "/v3/api-docs/**","/swagger-ui/**"};
+    private static final String ADMIN = "ADMIN";
 
     private final UserDetailsService userDetailsService;
 
@@ -32,27 +34,16 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(
-                (auth) -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .anyRequest().authenticated());
-        http.sessionManagement(
-                session -> session.sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS)); // Use stateless sessions
-
-        http.exceptionHandling(
-                exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-                        })
-        );// Handle unauthorized access
-
-        http.headers(headersConfigurer->headersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)); // Allow framing from the same origin
-
-        http.csrf(AbstractHttpConfigurer::disable); // Disable CSRF protection for simplicity, not recommended for production
-
-        http.addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+        return http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(
+                        auth -> auth
+                                .requestMatchers(WHITE_LIST).permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/auth").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
+                                .anyRequest().authenticated())
+                .httpBasic(Customizer.withDefaults())
+                .build();
     }
 
     @Bean
@@ -60,10 +51,6 @@ public class SecurityConfiguration {
         return new JWTAuthenticationFilter();
     }
 
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public AuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {

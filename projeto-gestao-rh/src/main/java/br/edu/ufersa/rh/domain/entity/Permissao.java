@@ -1,7 +1,6 @@
 package br.edu.ufersa.rh.domain.entity;
 
-
-import br.edu.ufersa.rh.domain.enums.UsuarioStatusEnum;
+import br.edu.ufersa.rh.domain.enums.PermissaoTipoEnum;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,63 +17,43 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(schema = "rh", name = "usuarios")
-public class Usuario {
+@Table(schema = "rh", name = "permissoes")
+@EntityListeners(AuditingEntityListener.class)
+public class Permissao {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "usu_id")
+    @Column(name = "perm_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usu_fun_id", referencedColumnName = "fun_id")
-    @ToString.Exclude
-    private Funcionario funcionario;
+    @Column(name = "perm_nome", nullable = false, unique = true, length = 50)
+    private String nome;
 
-    @Column(name = "usu_username", nullable = false, unique = true)
-    private String username;
-
-    @Column(name = "usu_password", nullable = false)
-    private String password;
-
-    @Column(name = "usu_role", nullable = false)
-    private String role;
-
-    @Column(name = "usu_ativo", nullable = false)
-    private Boolean ativo;
-
-    @Column(name = "usu_ultimo_acesso")
-    private LocalDateTime ultimoAcesso;
+    @Column(name = "perm_descricao", length = 255)
+    private String descricao;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "usu_status", nullable = false)
-    private UsuarioStatusEnum status;
+    @Column(name = "perm_tipo", nullable = false)
+    private PermissaoTipoEnum tipo;
 
-    @Column(name = "usu_tentativas_falhas", nullable = false)
-    private Integer tentativasFalhas;
+    @Column(name = "perm_recurso", length = 100)
+    private String recurso;
 
-    @Column(name = "usu_data_bloqueio")
-    private LocalDateTime dataBloqueio;
+    @Column(name = "perm_ativo", nullable = false)
+    private Boolean ativo;
 
     @CreationTimestamp
-    @Column(name = "usu_data_criacao")
+    @Column(name = "perm_data_criacao")
     private LocalDateTime dataCriacao;
 
     @UpdateTimestamp
-    @Column(name = "usu_data_atualizacao")
+    @Column(name = "perm_data_atualizacao")
     private LocalDateTime dataAtualizacao;
 
     @Version
-    @Column(name = "usu_versao", nullable = false)
+    @Column(name = "perm_versao", nullable = false)
     private Integer versao;
-
-    public Usuario(String username, String password, String role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
 
     @Override
     public final boolean equals(Object o) {
@@ -83,8 +62,8 @@ public class Usuario {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Usuario usuario = (Usuario) o;
-        return getId() != null && Objects.equals(getId(), usuario.getId());
+        Permissao permissao = (Permissao) o;
+        return getId() != null && Objects.equals(getId(), permissao.getId());
     }
 
     @Override

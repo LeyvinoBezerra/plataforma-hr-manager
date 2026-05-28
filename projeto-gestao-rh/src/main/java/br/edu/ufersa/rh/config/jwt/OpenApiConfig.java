@@ -1,0 +1,33 @@
+package br.edu.ufersa.rh.config.jwt;
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Contact;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+
+@OpenAPIDefinition(
+        info = @Info(
+                title = "HR Manager API",
+                version = "v1",
+                description = "API segura para gestão de RH",
+                contact = @Contact(
+                        name = "Equipe Backend"
+                )
+        ),
+        security = @SecurityRequirement(name = "bearerAuth")
+)
+
+@SecurityScheme(
+        name = "bearerAuth",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer",
+        bearerFormat = "JWT"
+)
+
+public class OpenApiConfig {
+}

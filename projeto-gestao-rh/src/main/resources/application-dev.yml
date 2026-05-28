@@ -1,0 +1,42 @@
+server:
+  port: ${PORT:8080}
+  error:
+    include-stacktrace: NEVER
+    include-binding-errors: NEVER
+
+spring:
+  application:
+    name: gestao-rh
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:gestaorh-db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    tomcat:
+      max-active: 3
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  sql:
+    init:
+      mode: always
+      continue-on-error: true
+      platform: postgresql
+
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:57135971194814649} # genetate a strong secret key for production
+  expiration: ${JWT_EXPIRATION:3600000} # 1 hour in milliseconds
+
+# Security Configuration
+security:
+  lock:
+    max-attempts: 5
+    lock-duration-minutes: 30
+  password:
+    encoder-strength: 12

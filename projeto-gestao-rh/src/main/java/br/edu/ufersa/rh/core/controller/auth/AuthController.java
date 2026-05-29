@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@Tag(name = "Authentication", description = "Login, register e logout")
+@Tag(name = "1. Authentication", description = "Fluxo de autenticação: Registro, Login e Logout")
 public class AuthController {
 
     private final AuthenticationService authenticationService;

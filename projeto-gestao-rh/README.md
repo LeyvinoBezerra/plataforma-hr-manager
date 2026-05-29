@@ -5,10 +5,12 @@ Sistema corporativo para gestão de Recursos Humanos desenvolvido com Java + Spr
 ---
 
 ## Sumário (rápido)
-- Executar local: `mvn clean install` + `mvn spring-boot:run` (ou usar Docker Compose)
-- Swagger UI: `http://localhost:8080/swagger-ui/index.html`
-- Coleção seed (preenchimento ponta-a-ponta): `src/main/resources/insomnia/API-GESTAO-RH-seed.postman_collection.json`
-- Endpoints principais: `/api/v1/auth`, `/api/v1/pessoas`, `/api/v1/funcionarios`, `/api/v1/perfis`, `/api/v1/enderecos`, `/api/v1/permissoes`, `/api/v1/acessos`
+- **Executar local:** `mvn clean install` + `mvn spring-boot:run` (ou usar Docker Compose)
+- **Swagger UI:** `http://localhost:8080/swagger-ui/index.html` ✅ Agora organizado igual à coleção!
+- **Tutorial Completo Ponta a Ponta:** `TUTORIAL-COMPLETO.md` ⭐ **LEIA ISTO PRIMEIRO!**
+- **Coleção Postman Organizada:** `src/main/resources/postman/API-GESTAO-RH-ORGANIZED.json`
+- **Coleção seed original:** `src/main/resources/insomnia/API-GESTAO-RH-seed.postman_collection.json`
+- **Endpoints principais:** `/api/v1/auth`, `/api/v1/acessos`, `/api/v1/permissoes`, `/api/v1/usuarios`, `/api/v1/perfis`, `/api/v1/enderecos`, `/api/v1/pessoas`, `/api/v1/funcionarios`
 
 ---
 
@@ -81,18 +83,151 @@ Após subir a aplicação, abra o Swagger UI: `http://localhost:8080/swagger-ui/
 
 ---
 
-## Tutorial Swagger — passo a passo (ponta a ponta)
-Abaixo está um tutorial prático que você pode executar diretamente no Swagger UI (ou seguir na coleção Postman/Insomnia). Os exemplos são reais e seguem a ordem correta para popular o sistema e testar um usuário com permissões.
+## 🎯 COMECE AQUI: Tutorial Completo Ponta a Ponta
 
-Pré-requisitos:
-- Aplicação rodando (http://localhost:8080)
-- Swagger aberto: http://localhost:8080/swagger-ui/index.html
+**Leia o arquivo `TUTORIAL-COMPLETO.md` para um guia prático e detalhado de como usar o sistema inteiro!**
 
-Observação importante: o Swagger UI não mantém variáveis entre requisições — ao usar o Swagger copie os IDs retornados (por exemplo `id`) das respostas e recole-os nos campos das próximas requisições. Para automação, use a coleção seed (Postman/Insomnia) que salva variáveis automaticamente.
+Este tutorial inclui:
+- ✅ Exemplo real passo a passo
+- ✅ Como registrar e autenticar
+- ✅ Como criar permissões, perfis e acessos
+- ✅ Como criar pessoas, endereços e funcionários
+- ✅ Como registrar novos usuários e vinculá-los
+- ✅ Como fazer login como diferentes usuários
+- ✅ Como testar o acesso baseado em roles
 
-Passo 1 — Registrar (bootstrap) um usuário ADMIN (apenas para seed)
-- Endpoint: POST /api/v1/auth/register
-- Body (exemplo):
+**Tempo estimado:** 10-15 minutos para completar
+
+---
+
+## Tutorial Completo — Usando Postman (RECOMENDADO)
+
+Para uma experiência melhor e automática, use a **coleção Postman organizada**: `API-GESTAO-RH-ORGANIZED.json`
+
+### Importar a coleção no Postman:
+1. Abra o Postman
+2. Clique em **Import** (botão no canto superior esquerdo)
+3. Selecione **Upload Files** → navegue até `src/main/resources/postman/API-GESTAO-RH-ORGANIZED.json`
+4. Clique em **Import**
+
+A coleção será carregada com **8 seções organizadas em ordem de execução**:
+
+#### 📋 Sequência recomendada (siga nesta ordem):
+
+1. **1. Authentication** (Autenticação básica)
+   - Registre um usuário ADMIN
+   - Faça login e copie o token (ele é salvo automaticamente em `authToken`)
+
+2. **2. Access Management** (Gestão de acessos)
+   - Conceda permissões a perfis
+   - Consulte acessos
+
+3. **3. Permissions** (Permissões)
+   - Crie as permissões do sistema (READ, WRITE, DELETE)
+
+4. **4. Users** (Usuários)
+   - Vincule funcionários a usuários
+
+5. **5. Profiles** (Perfis)
+   - Crie os perfis (ADMIN, GESTOR, USUARIO_PADRAO)
+
+6. **6. Endereços** (Endereços)
+   - Crie endereços para as pessoas
+
+7. **7. Pessoas** (Dados pessoais)
+   - Registre as pessoas no sistema
+
+8. **8. Funcionários** (Dados profissionais)
+   - Crie os funcionários vinculados às pessoas
+
+### 🔑 Variáveis de Ambiente (Postman):
+A coleção já tem **2 variáveis** pré-configuradas:
+
+| Variável | Valor Padrão | Descrição |
+|----------|---|---|
+| `baseURL` | `http://localhost:8080` | URL da API |
+| `authToken` | (vazio) | Token JWT salvo automaticamente após login |
+
+**Cada requisição de Login salva o token automaticamente** no script de teste (veja a aba "Tests" nas requisições de login).
+
+### 🚀 Fluxo passo a passo (prático):
+
+#### Passo 1: Registrar usuário ADMIN
+- Ir para seção **1. Authentication** → **1.1 Register - Criar usuário admin**
+- Clique em **Send**
+- Resposta: `201 Created` com dados do usuário
+
+#### Passo 2: Login e obter token
+- Ir para **1.3 Login - Obter token (admin)**
+- Clique em **Send**
+- O token é automaticamente salvo em `{{authToken}}`
+- (Você verá a confirmação no console do Postman)
+
+#### Passo 3: Criar Permissões
+- Ir para **3. Permissions** → **3.1 Criar permissão - FUNCIONARIO_READ**
+- Clique em **Send**
+- Copie o `id` retornado para o próximo passo (se precisar referenciá-lo)
+- Repita para **3.2** e **3.3**
+
+#### Passo 4: Criar Perfis
+- Ir para **5. Profiles** → **5.1 Criar perfil - ADMIN**
+- Clique em **Send**
+- Copie o `id` retornado
+- Repita para **5.2** e **5.3**
+
+#### Passo 5: Conceder Acessos
+- Ir para **2. Access Management** → **2.1 Conceder acesso**
+- Clique em **Send** (usa os IDs de perfil e permissão criados)
+
+#### Passo 6: Criar Pessoa
+- Ir para **7. Pessoas** → **7.1 Criar pessoa**
+- Clique em **Send**
+- Copie o `id` retornado (`pessoaId`)
+
+#### Passo 7: Criar Endereço
+- Ir para **6. Endereços** → **6.1 Criar endereço**
+- Na requisição, substitua `"id": 1` em `"pessoa": { "id": 1 }` pelo `pessoaId` obtido
+- Clique em **Send**
+
+#### Passo 8: Criar Funcionário
+- Ir para **8. Funcionários** → **8.1 Criar funcionário**
+- Na requisição, substitua `"id": 1` em `"pessoa": { "id": 1 }` pelo `pessoaId`
+- Clique em **Send**
+- Copie o `id` retornado (`funcionarioId`)
+
+#### Passo 9: Registrar usuário GESTOR
+- Voltar para **1. Authentication** → **1.2 Register - Criar usuário gestor**
+- Clique em **Send**
+- Copie o `id` retornado (`usuarioGestorId`)
+
+#### Passo 10: Vincular Usuário ao Funcionário
+- Ir para **4. Users** → **4.1 Vincular funcionário a usuário**
+- Na requisição, substitua `/1/` pelo `usuarioGestorId` e `funcionarioId=1` pelo `funcionarioId` obtido
+- Clique em **Send**
+
+#### Passo 11: Testar com Usuário Gestor
+- Ir para **1.3 Login - Obter token (admin)**, mas mude o body para:
+  ```json
+  {
+    "username": "gestor",
+    "password": "Gestor@12345"
+  }
+  ```
+- Clique em **Send**
+- O novo token é salvo em `{{authToken}}`
+- Agora teste um endpoint restrito, ex: **8.3 Obter funcionário por ID**
+
+---
+
+## Tutorial Swagger — passo a passo (alternativa)
+
+Se preferir usar o Swagger UI, abra: `http://localhost:8080/swagger-ui/index.html`
+
+**Nota importante:** O Swagger UI **NÃO salva variáveis automaticamente**. Você terá que **copiar manualmente** os IDs e tokens entre as requisições. Para uma experiência melhor, use o **Postman com a coleção organizada** (conforme instruído acima).
+
+### Passo 1 — Registrar usuário ADMIN
+- Endpoint: `POST /api/v1/auth/register`
+- Body:
 ```json
 {
   "username": "admin",
@@ -100,19 +235,19 @@ Passo 1 — Registrar (bootstrap) um usuário ADMIN (apenas para seed)
   "roles": ["ADMIN"]
 }
 ```
-- Resposta: `201 Created` com o objeto `Usuario` contendo `id`.
+- Copie o `id` retornado
 
-Passo 2 — Login Admin e obter token
-- Endpoint: POST /api/v1/auth/login
-- Body (exemplo):
+### Passo 2 — Login Admin e obter token
+- Endpoint: `POST /api/v1/auth/login`
+- Body:
 ```json
 {
   "username": "admin",
   "password": "Admin@12345"
 }
 ```
-- Resposta: objeto `AuthenticationResponse` com `token` (JWT).
-- No Swagger UI: clique em "Authorize" e cole `Bearer <token>` (sem aspas). A partir daí as chamadas protegidas usarão esse token.
+- Copie o valor de `token` retornado
+- No Swagger: clique em **Authorize** (botão no topo) e cole `Bearer <token_copiado>`
 
 Passo 3 — Criar permissão
 - Endpoint: POST /api/v1/permissoes
@@ -251,16 +386,57 @@ Recomendações extras:
 
 ---
 
-# Docker
-(Arquivo `Dockerfile` e `docker-compose.yml` já incluídos neste repositório)
+# Coleções disponíveis
 
-# Observações finais
-- Se quiser, posso:
-  - implementar hardening do `register` e adicionar um `AdminBootstrapRunner` que cria o admin a partir de variáveis de ambiente;
-  - implementar refresh-token + blacklist em Redis;
-  - gerar testes de integração que executem a coleção seed automaticamente.
+## 1. **API-GESTAO-RH-ORGANIZED.json** ⭐ (RECOMENDADA)
+- **Localização:** `src/main/resources/postman/API-GESTAO-RH-ORGANIZED.json`
+- **Descrição:** Coleção completamente reorganizada e categorizada por fluxo lógico
+- **Seções:** Authentication → Access Management → Permissions → Users → Profiles → Endereços → Pessoas → Funcionários
+- **Uso:** Importar no Postman para teste completo ponta-a-ponta
+- **Benefício:** Fluxo intuitivo com etapas claramente marcadas (1.1, 1.2, etc.)
+
+## 2. **API-GESTAO-RH.json** (Original)
+- **Localização:** `src/main/resources/postman/API-GESTAO-RH.json`
+- **Descrição:** Coleção original com estrutura básica
+- **Uso:** Referência ou backup
+
+## 3. **API-GESTAO-RH-seed.postman_collection.json**
+- **Localização:** `src/main/resources/insomnia/API-GESTAO-RH-seed.postman_collection.json`
+- **Descrição:** Coleção com seed data (dados iniciais)
+- **Uso:** Para popular o banco com dados de exemplo
 
 ---
 
-# Contato
+# Troubleshooting
+
+## Erro: "Token inválido ou expirado"
+- Verifique se o token ainda é válido (TTL configurável em `application-dev.yml`)
+- Faça login novamente para obter um novo token
+- No Postman, clique em **Authorize** com o novo token
+
+## Erro: "Unauthorized - não tem permissão"
+- Verifique se o usuário tem o role correto
+- Confirme que o perfil do usuário tem a permissão necessária
+- Use `GET /api/v1/acessos/perfil/{perfilId}/ativos` para listar permissões
+
+## Erro: "null value in column 'usu_ativo'"
+- Certifique-se de que ao registrar um usuário, o campo `roles` não está vazio
+- Use a coleção Postman que já tem valores padrão
+
+## A aplicação não inicia
+- Verifique se o PostgreSQL está rodando
+- Confirme as credenciais de BD em `application-dev.yml`
+- Verifique o arquivo `target/classes/application-dev.yml` para confirmar as configurações
+
+## CORS error
+- Se receber erro CORS ao chamar de frontend, configure o CORS em `SecurityConfiguration`
+- Certifique-se de que o header `Authorization` está permitido
+
+---
+
+# Contato e Suporte
 Equipe Backend — responsável pela manutenção do repositório.
+
+Para dúvidas sobre a API, use o Swagger: `http://localhost:8080/swagger-ui/index.html`
+Para problemas, abra uma issue no repositório ou entre em contato com o time.
+

@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/permissoes")
-@Tag(name = "Permissions", description = "CRUD de Permissões")
+@Tag(name = "3. Permissions", description = "Criação e gestão de permissões do sistema")
 @SecurityRequirement(name = "bearer-jwt")
 public class PermissaoController {
 

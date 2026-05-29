@@ -14,30 +14,32 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(
                 title = "HR Manager API",
-                version = "v1",
-                description = "API segura para gestão de RH",
+                version = "v1.0",
+                description = "API segura para gestão de Recursos Humanos com autenticação JWT e controle de acesso baseado em roles (RBAC). " +
+                        "Siga a sequência recomendada: Authentication → Access Management → Permissions → Users → Profiles → Endereços → Pessoas → Funcionários",
                 contact = @Contact(
                         name = "Equipe Backend"
                 )
         ),
-        security = @SecurityRequirement(name = "bearerAuth"),
+        security = @SecurityRequirement(name = "bearer-jwt"),
         tags = {
-                @Tag(name = "Authentication", description = "Login, register e logout"),
-                @Tag(name = "Access Management", description = "Gerenciamento de acessos e atribuições (Acessos, Permissões)"),
-                @Tag(name = "Permissions", description = "CRUD de Permissões"),
-                @Tag(name = "Profiles", description = "CRUD de Perfis (roles)") ,
-                @Tag(name = "Pessoas", description = "Gerenciamento de pessoas"),
-                @Tag(name = "Endereços", description = "Gerenciamento de endereços"),
-                @Tag(name = "Funcionários", description = "Gerenciamento de funcionários"),
-                @Tag(name = "Users", description = "Endpoints relacionados a usuários")
+                @Tag(name = "1. Authentication", description = "Fluxo de autenticação: Registro, Login e Logout de usuários"),
+                @Tag(name = "2. Access Management", description = "Gestão de acessos e atribuição de permissões a perfis"),
+                @Tag(name = "3. Permissions", description = "Criação e gestão de permissões do sistema"),
+                @Tag(name = "4. Users", description = "Gestão de usuários e vinculação com funcionários"),
+                @Tag(name = "5. Profiles", description = "Criação e gestão de perfis de acesso (roles)"),
+                @Tag(name = "6. Endereços", description = "Gestão de endereços das pessoas"),
+                @Tag(name = "7. Pessoas", description = "Cadastro e gestão de dados pessoais"),
+                @Tag(name = "8. Funcionários", description = "Gestão de funcionários e dados profissionais")
         }
 )
 
 @SecurityScheme(
-        name = "bearerAuth",
+        name = "bearer-jwt",
         type = SecuritySchemeType.HTTP,
         scheme = "bearer",
-        bearerFormat = "JWT"
+        bearerFormat = "JWT",
+        description = "Token JWT obtido através do endpoint POST /api/v1/auth/login"
 )
 
 public class OpenApiConfig {

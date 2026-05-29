@@ -9,6 +9,7 @@ import br.edu.ufersa.rh.domain.dtos.pessoa.response.PessoaPutResponse;
 import br.edu.ufersa.rh.domain.mappers.PessoaMapper;
 import br.edu.ufersa.rh.exception.NotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -22,7 +23,8 @@ import java.util.List;
 @RequestMapping(PessoaController.API_V1_PESSOAS)
 @AllArgsConstructor
 @Log4j2
-@Tag(name = "Pessoas", description = "Endpoints para gerenciamento de pessoas físicas e jurídicas")
+@Tag(name = "7. Pessoas", description = "Cadastro e gestão de dados pessoais")
+@SecurityRequirement(name = "bearer-jwt")
 public class PessoaController {
 
     public static final String API_V1_PESSOAS = "/api/v1/pessoas";

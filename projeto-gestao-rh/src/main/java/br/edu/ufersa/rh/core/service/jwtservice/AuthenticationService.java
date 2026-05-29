@@ -66,15 +66,15 @@ public class AuthenticationService {
     public Usuario register(AuthenticationRequest request) {
         boolean isExist = userDetailsService.userExists(request.username());
         if (!isExist) {
-            Usuario novoUsuario = new Usuario(request.username(),
-                    passwordEncoder.encode(request.password()),
-                    String.join(",", request.roles())
-            );
-            // Valores obrigatórios / defaults
-            novoUsuario.setAtivo(Boolean.TRUE);
-            novoUsuario.setStatus(UsuarioStatusEnum.ATIVO);
-            novoUsuario.setTentativasFalhas(0);
-            // outras propriedades opcionais (dataBloqueio, ultimoAcesso) ficam nulas
+            Usuario novoUsuario = Usuario.builder()
+                    .username(request.username())
+                    .password(passwordEncoder.encode(request.password()))
+                    .role(request.roles() != null && !request.roles().isEmpty() ? String.join(",", request.roles()) : "USER")
+                    .ativo(Boolean.TRUE)
+                    .status(UsuarioStatusEnum.ATIVO)
+                    .tentativasFalhas(0)
+                    .versao(0)
+                    .build();
             return userDetailsService.saveUser(novoUsuario);
         }
         throw new IllegalArgumentException("User already exists");

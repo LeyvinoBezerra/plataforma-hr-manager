@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/acessos")
-@Tag(name = "Access Management", description = "Gerenciamento de acessos e atribuições (Acessos, Permissões)")
+@Tag(name = "2. Access Management", description = "Gestão de acessos e atribuição de permissões a perfis")
 @SecurityRequirement(name = "bearer-jwt")
 public class AcessoController {
 

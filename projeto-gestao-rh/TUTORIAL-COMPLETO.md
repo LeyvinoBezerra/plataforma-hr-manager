@@ -219,7 +219,7 @@ Vamos criar 3 permissões básicas: READ, WRITE, DELETE
 ```json
 {
   "nome": "GESTOR",
-  "permissoes": "GERENCIAR_RELATORIOS",
+  "permissoes": "ADMIN",
   "acessoGlobal": false
 }
 ```
@@ -237,7 +237,7 @@ Vamos criar 3 permissões básicas: READ, WRITE, DELETE
 ```json
 {
   "nome": "USUARIO_PADRAO",
-  "permissoes": "GERENCIAR_RELATORIOS",
+  "permissoes": "PERFIL",
   "acessoGlobal": false
 }
 ```
@@ -327,7 +327,11 @@ Para verificar que funcionou:
   "nomeDaMae": "Maria Silva",
   "nomeDoPai": "José Silva",
   "pis": "12345678901",
-  "rg": "MG1234567"
+  "rg": "MG1234567",
+  "nacionalidade": "BRASILEIRA",
+  "rgOrgaoEmissor": "SSP",
+  "dataEmissao": "01/01/2010",
+  "rgUfEmissor": "MG"
 }
 ```
 

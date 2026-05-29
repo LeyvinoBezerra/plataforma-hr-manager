@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -19,7 +20,17 @@ import org.springframework.context.annotation.Configuration;
                         name = "Equipe Backend"
                 )
         ),
-        security = @SecurityRequirement(name = "bearerAuth")
+        security = @SecurityRequirement(name = "bearerAuth"),
+        tags = {
+                @Tag(name = "Authentication", description = "Login, register e logout"),
+                @Tag(name = "Access Management", description = "Gerenciamento de acessos e atribuições (Acessos, Permissões)"),
+                @Tag(name = "Permissions", description = "CRUD de Permissões"),
+                @Tag(name = "Profiles", description = "CRUD de Perfis (roles)") ,
+                @Tag(name = "Pessoas", description = "Gerenciamento de pessoas"),
+                @Tag(name = "Endereços", description = "Gerenciamento de endereços"),
+                @Tag(name = "Funcionários", description = "Gerenciamento de funcionários"),
+                @Tag(name = "Users", description = "Endpoints relacionados a usuários")
+        }
 )
 
 @SecurityScheme(

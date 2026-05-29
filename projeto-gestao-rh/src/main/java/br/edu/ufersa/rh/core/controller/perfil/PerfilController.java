@@ -22,7 +22,7 @@ import java.util.List;
 @RequestMapping(PerfilController.API_V1_PERFIS)
 @AllArgsConstructor
 @Log4j2
-@Tag(name = "Perfis", description = "Endpoints para gerenciamento de perfis de acesso dos usuários")
+@Tag(name = "Profiles", description = "CRUD de Perfis (roles)")
 public class PerfilController {
 
     public static final String API_V1_PERFIS = "/api/v1/perfis";

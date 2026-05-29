@@ -1,6 +1,8 @@
 package br.edu.ufersa.rh.config.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -36,7 +38,10 @@ public class JwtAuthenticationEntryPoint
         body.put("message", "Token inválido ou expirado");
         body.put("path", request.getServletPath());
 
-        new ObjectMapper()
-                .writeValue(response.getOutputStream(), body);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+
+        mapper.writeValue(response.getOutputStream(), body);
     }
 }

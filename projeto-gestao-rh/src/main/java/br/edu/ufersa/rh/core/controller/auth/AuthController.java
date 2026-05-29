@@ -5,8 +5,10 @@ import br.edu.ufersa.rh.core.service.jwtservice.AuthenticationService;
 import br.edu.ufersa.rh.core.service.jwtservice.LoginAuditService;
 import br.edu.ufersa.rh.domain.dtos.jtw.AuthenticationRequest;
 import br.edu.ufersa.rh.domain.dtos.jtw.AuthenticationResponse;
+import br.edu.ufersa.rh.domain.entity.Usuario;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@Tag(name = "Authentication Controller", description = "Endpoints for user authentication and token management")
+@Tag(name = "Authentication", description = "Login, register e logout")
 public class AuthController {
 
     private final AuthenticationService authenticationService;
@@ -35,9 +37,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody AuthenticationRequest request) {
-        String message =  authenticationService.register(request);
-        return ResponseEntity.ok(message);
+    public ResponseEntity<Usuario> register(@RequestBody AuthenticationRequest request) {
+        Usuario usuario =  authenticationService.register(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuario);
     }
 
     @PostMapping("/logout")

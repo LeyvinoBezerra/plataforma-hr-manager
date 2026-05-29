@@ -63,17 +63,20 @@ public class AuthenticationService {
         }
     }
 
-    public String register(AuthenticationRequest request) {
+    public Usuario register(AuthenticationRequest request) {
         boolean isExist = userDetailsService.userExists(request.username());
         if (!isExist) {
             Usuario novoUsuario = new Usuario(request.username(),
                     passwordEncoder.encode(request.password()),
                     String.join(",", request.roles())
             );
+            // Valores obrigatórios / defaults
+            novoUsuario.setAtivo(Boolean.TRUE);
             novoUsuario.setStatus(UsuarioStatusEnum.ATIVO);
             novoUsuario.setTentativasFalhas(0);
-            userDetailsService.saveUser(novoUsuario);
+            // outras propriedades opcionais (dataBloqueio, ultimoAcesso) ficam nulas
+            return userDetailsService.saveUser(novoUsuario);
         }
-        return "User registered successfully";
+        throw new IllegalArgumentException("User already exists");
     }
 }

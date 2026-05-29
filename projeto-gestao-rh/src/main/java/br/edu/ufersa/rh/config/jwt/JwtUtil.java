@@ -12,7 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.security.MessageDigest;
 import java.util.Date;
 
 @Service
@@ -36,7 +38,33 @@ public class JwtUtil {
 
     private Key key() {
         if (key == null) {
-            key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+            if (jwtSecret == null || jwtSecret.isBlank()) {
+                throw new IllegalStateException("JWT secret is not configured. Set 'jwt.secret' with a secure value.");
+            }
+            byte[] keyBytes = null;
+            try {
+                // try decode as base64 first
+                keyBytes = Decoders.BASE64.decode(jwtSecret);
+                // if decoded length < 32 bytes (256 bits), fallthrough to derive
+                if (keyBytes.length < 32) {
+                    keyBytes = null;
+                }
+            } catch (Exception e) {
+                // not base64 or decode failed -> derive below
+                keyBytes = null;
+            }
+
+            if (keyBytes == null) {
+                // Derive a 256-bit key from the provided secret using SHA-256
+                try {
+                    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+                    keyBytes = digest.digest(jwtSecret.getBytes(StandardCharsets.UTF_8));
+                } catch (Exception ex) {
+                    throw new IllegalStateException("Failed to derive JWT signing key", ex);
+                }
+            }
+
+            key = Keys.hmacShaKeyFor(keyBytes);
         }
         return key;
     }
@@ -45,33 +73,34 @@ public class JwtUtil {
     public String generateToken(UserDetails userDetails) {
 
         return Jwts.builder()
-                .subject(userDetails.getUsername())
-                .issuer("com.saatvik.app")
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .setSubject(userDetails.getUsername())
+                .setIssuer("com.saatvik.app")
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(key())
                 .compact();
     }
 
     // Get username from JWT token
     public String getUsernameFromToken(String token) {
-        return Jwts.parser()
-                .verifyWith((SecretKey) key())
+        return Jwts.parserBuilder()
+                .setSigningKey(key())
                 .build()
-                .parseSignedClaims(token)
-                .getPayload().getSubject();
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
     }
 
     // Validate JWT token
     public boolean validateJwtToken(String token) {
         try {
-            Jwts.parser()
-                    .verifyWith((SecretKey) key())
+            Jwts.parserBuilder()
+                    .setSigningKey(key())
                     .build()
-                    .parseSignedClaims(token);
+                    .parseClaimsJws(token);
 
             return true;
-        } catch (SecurityException e) {
+        } catch (io.jsonwebtoken.security.SecurityException e) {
             System.out.println("Invalid JWT signature: " + e.getMessage());
         } catch (MalformedJwtException e) {
             System.out.println("Invalid JWT token: " + e.getMessage());

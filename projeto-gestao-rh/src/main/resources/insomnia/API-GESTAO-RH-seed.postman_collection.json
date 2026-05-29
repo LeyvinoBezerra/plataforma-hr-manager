@@ -1,0 +1,170 @@
+{
+  "info": {
+    "_postman_id": "seed-collection-gestao-rh",
+    "name": "API-GESTAO-RH-SEED",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 - Register Admin (bootstrap)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@12345\",\n  \"roles\": [\"ADMIN\"]\n}"
+        },
+        "url": { "raw": "{{baseURL}}/api/v1/auth/register", "host": ["{{baseURL}}"], "path": ["api","v1","auth","register"] }
+      },
+      "response": []
+    },
+    {
+      "name": "2 - Login Admin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "try {",
+              "  var json = pm.response.json();",
+              "  if (json && json.token) {",
+              "    pm.collectionVariables.set('adminToken', 'Bearer ' + json.token);",
+              "    console.log('adminToken set');",
+              "  }",
+              "} catch(e) { console.log('no json or token'); }"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@12345\"\n}" },
+        "url": { "raw": "{{baseURL}}/api/v1/auth/login", "host": ["{{baseURL}}"], "path": ["api","v1","auth","login"] }
+      },
+      "response": []
+    },
+    {
+      "name": "3 - Create Permissao FUNCIONARIO_READ",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "{{adminToken}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"nome\": \"FUNCIONARIO_READ\",\n  \"descricao\": \"Permite ler funcionarios\",\n  \"tipo\": \"READ\",\n  \"recurso\": \"funcionarios\",\n  \"ativo\": true\n}" },
+        "url": { "raw": "{{baseURL}}/api/v1/permissoes", "host": ["{{baseURL}}"], "path": ["api","v1","permissoes"] }
+      },
+      "event": [ { "listen": "test", "script": { "exec": [ "try{ var json = pm.response.json(); if(json && json.id){ pm.collectionVariables.set('permissaoId', json.id); } }catch(e){}" ], "type": "text/javascript" } } ],
+      "response": []
+    },
+    {
+      "name": "4 - Create Perfil GESTOR",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "{{adminToken}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"nome\": \"GESTOR\",\n  \"permissoes\": \"ADMIN\",\n  \"acessoGlobal\": false\n}" },
+        "url": { "raw": "{{baseURL}}/api/v1/perfis/salvar", "host": ["{{baseURL}}"], "path": ["api","v1","perfis","salvar"] }
+      },
+      "event": [ { "listen": "test", "script": { "exec": [ "try{ var json = pm.response.json(); if(json && json.id){ pm.collectionVariables.set('perfilId', json.id); } }catch(e){}" ], "type": "text/javascript" } } ],
+      "response": []
+    },
+    {
+      "name": "5 - Conceder Acesso Perfil->Permissao",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "{{adminToken}}" } ],
+        "url": { "raw": "{{baseURL}}/api/v1/acessos/conceder?perfilId={{perfilId}}&permissaoId={{permissaoId}}", "host": ["{{baseURL}}"], "path": ["api","v1","acessos","conceder"], "query": [ { "key": "perfilId", "value": "{{perfilId}}" }, { "key": "permissaoId", "value": "{{permissaoId}}" } ] }
+      },
+      "response": []
+    },
+    {
+      "name": "6 - Criar Pessoa (João)",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "{{adminToken}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"cpf\": \"12345678901\",\n  \"nomeCompleto\": \"João da Silva\",\n  \"dataNascimento\": \"27/04/1990\",\n  \"sexo\": \"MASCULINO\",\n  \"nomeDaMae\": \"Maria Silva\",\n  \"nomeDoPai\": \"José Silva\",\n  \"pis\": \"12345678901\",\n  \"rg\": \"MG1234567\",\n  \"rgOrgaoEmissor\": \"SSP\",\n  \"rgUfEmissor\": \"MG\",\n  \"nacionalidade\": \"BR\"\n}" },
+        "url": { "raw": "{{baseURL}}/api/v1/pessoas/salvar", "host": ["{{baseURL}}"], "path": ["api","v1","pessoas","salvar"] }
+      },
+      "event": [ { "listen": "test", "script": { "exec": [ "try{ var json=pm.response.json(); if(json && json.id){ pm.collectionVariables.set('pessoaId', json.id); } }catch(e){}" ], "type": "text/javascript" } } ],
+      "response": []
+    },
+    {
+      "name": "7 - Criar Endereco para Pessoa",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "{{adminToken}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"pessoa\": { \"id\": {{pessoaId}} },\n  \"logradouro\": \"Av. Brasil\",\n  \"cep\": \"59000000\",\n  \"numero\": \"100\",\n  \"bairro\": \"Centro\",\n  \"cidade\": \"Natal\",\n  \"estado\": \"RN\",\n  \"enderecoPrincipal\": true\n}" },
+        "url": { "raw": "{{baseURL}}/api/v1/enderecos", "host": ["{{baseURL}}"], "path": ["api","v1","enderecos"] }
+      },
+      "event": [ { "listen": "test", "script": { "exec": [ "try{ var json=pm.response.json(); if(json && json.id){ pm.collectionVariables.set('enderecoId', json.id); } }catch(e){}" ], "type": "text/javascript" } } ],
+      "response": []
+    },
+    {
+      "name": "8 - Criar Funcionario vinculado a Pessoa",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "{{adminToken}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"pessoa\": { \"id\": {{pessoaId}} },\n  \"email\": \"joao.silva@empresa.com\",\n  \"dataAdmissao\": \"01/01/2025\",\n  \"status\": \"ATIVO\",\n  \"tipoContrato\": \"CLT\",\n  \"salarioBase\": 3500\n}" },
+        "url": { "raw": "{{baseURL}}/api/v1/funcionarios/salvar", "host": ["{{baseURL}}"], "path": ["api","v1","funcionarios","salvar"] }
+      },
+      "event": [ { "listen": "test", "script": { "exec": [ "try{ var json=pm.response.json(); if(json && json.id){ pm.collectionVariables.set('funcionarioId', json.id); } }catch(e){}" ], "type": "text/javascript" } } ],
+      "response": []
+    },
+    {
+      "name": "9 - Register user GESTOR",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "try{",
+              "  var json = pm.response.json();",
+              "  if(json && json.id){",
+              "    pm.collectionVariables.set('usuarioGestorId', json.id);",
+              "  }",
+              "}catch(e){}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"gestor1\",\n  \"password\": \"Gestor@123\",\n  \"roles\": [\"GESTOR\"]\n}" },
+        "url": { "raw": "{{baseURL}}/api/v1/auth/register", "host": ["{{baseURL}}"], "path": ["api","v1","auth","register"] }
+      },
+      "response": []
+    },
+    {
+      "name": "9b - Vincular Usuario ao Funcionario",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Authorization", "value": "{{adminToken}}" }, { "key": "Content-Type", "value": "application/json" } ],
+        "url": { "raw": "{{baseURL}}/api/v1/usuarios/{{usuarioGestorId}}/vincular-funcionario?funcionarioId={{funcionarioId}}", "host": ["{{baseURL}}"], "path": ["api","v1","usuarios", "{{usuarioGestorId}}","vincular-funcionario"], "query": [ { "key": "funcionarioId", "value": "{{funcionarioId}}" } ] }
+      },
+      "response": []
+    },
+    {
+      "name": "10 - Login Gestor",
+      "event": [ { "listen": "test", "script": { "exec": [ "try{ var json=pm.response.json(); if(json && json.token){ pm.collectionVariables.set('gestorToken', 'Bearer ' + json.token); } }catch(e){}" ], "type": "text/javascript" } } ],
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"username\": \"gestor1\",\n  \"password\": \"Gestor@123\"\n}" },
+        "url": { "raw": "{{baseURL}}/api/v1/auth/login", "host": ["{{baseURL}}"], "path": ["api","v1","auth","login"] }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    { "key": "baseURL", "value": "http://localhost:8080", "type": "default" },
+    { "key": "adminToken", "value": "", "type": "default" },
+    { "key": "gestorToken", "value": "", "type": "default" },
+    { "key": "pessoaId", "value": "", "type": "default" },
+    { "key": "enderecoId", "value": "", "type": "default" },
+    { "key": "funcionarioId", "value": "", "type": "default" },
+    { "key": "perfilId", "value": "", "type": "default" },
+    { "key": "permissaoId", "value": "", "type": "default" },
+    { "key": "usuarioGestorId", "value": "", "type": "default" }
+  ]
+}

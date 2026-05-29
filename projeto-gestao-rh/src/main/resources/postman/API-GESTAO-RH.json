@@ -1,0 +1,218 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-gestao-rh-complete",
+    "name": "API-GESTAO-RH-COMPLETE",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "generated-by-ai"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register - criar usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@12345\",\n  \"roles\": [\"ADMIN\"]\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseURL}}/api/v1/auth/register", "host": ["{{baseURL}}"], "path": ["api","v1","auth","register"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Login - obter token",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"Admin@12345\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseURL}}/api/v1/auth/login", "host": ["{{baseURL}}"], "path": ["api","v1","auth","login"] }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// salva token retornado na variavel de ambiente collection",
+                  "try {",
+                  "  var json = pm.response.json();",
+                  "  if (json && json.token) {",
+                  "    pm.collectionVariables.set('authToken', 'Bearer ' + json.token);",
+                  "    console.log('authToken set');",
+                  "  }",
+                  "} catch(e) { console.log('no json in response or token missing'); }"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Logout - invalidar (placeholder)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": { "raw": "{{baseURL}}/api/v1/auth/logout", "host": ["{{baseURL}}"], "path": ["api","v1","auth","logout"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Pessoas",
+      "item": [
+        {
+          "name": "Listar todas",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "{{authToken}}" } ],
+            "url": { "raw": "{{baseURL}}/api/v1/pessoas/listarTodas", "host": ["{{baseURL}}"], "path": ["api","v1","pessoas","listarTodas"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Buscar por id",
+          "request": {
+            "method": "GET",
+            "header": [ { "key": "Authorization", "value": "{{authToken}}" } ],
+            "url": { "raw": "{{baseURL}}/api/v1/pessoas/buscarPorId?id=1", "host": ["{{baseURL}}"], "path": ["api","v1","pessoas","buscarPorId"], "query": [{"key":"id","value":"1"}] }
+          },
+          "response": []
+        },
+        {
+          "name": "Criar pessoa",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cpf\": \"13158199459\",\n  \"nomeCompleto\": \"Igor Ian Gonçalves\",\n  \"dataNascimento\": \"27/04/1996\",\n  \"sexo\": \"MASCULINO\",\n  \"nomeDaMae\": \"Priscila\",\n  \"nomeDoPai\": \"Gustavo\",\n  \"pis\": \"79764128617\",\n  \"rg\": \"261446204\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseURL}}/api/v1/pessoas/salvar", "host": ["{{baseURL}}"], "path": ["api","v1","pessoas","salvar"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar pessoa",
+          "request": {
+            "method": "PUT",
+            "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ],
+            "body": { "mode": "raw", "raw": "{\n  \"id\": 1,\n  \"cpf\": \"13158199459\",\n  \"nomeCompleto\": \"Igor Ian Gonçalves Santos\",\n  \"dataNascimento\": \"27/04/1996\",\n  \"sexo\": \"MASCULINO\",\n  \"numeroVersao\": 0\n}", "options": { "raw": { "language": "json" } } },
+            "url": { "raw": "{{baseURL}}/api/v1/pessoas/atualizar", "host": ["{{baseURL}}"], "path": ["api","v1","pessoas","atualizar"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Excluir pessoa",
+          "request": {
+            "method": "DELETE",
+            "header": [ { "key": "Authorization", "value": "{{authToken}}" } ],
+            "url": { "raw": "{{baseURL}}/api/v1/pessoas/excluir?id=1", "host": ["{{baseURL}}"], "path": ["api","v1","pessoas","excluir"], "query": [{"key":"id","value":"1"}] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Funcionarios",
+      "item": [
+        {
+          "name": "Listar todos",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/funcionarios/listarTodos", "host": ["{{baseURL}}"], "path": ["api","v1","funcionarios","listarTodos"] } },
+          "response": []
+        },
+        {
+          "name": "Buscar por id",
+          "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/funcionarios/buscarPorId?id=1", "host": ["{{baseURL}}"], "path": ["api","v1","funcionarios","buscarPorId"], "query": [{"key":"id","value":"1"}] } },
+          "response": []
+        },
+        {
+          "name": "Criar funcionario",
+          "request": {
+            "method": "POST",
+            "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"pessoa\": { \"id\": 1 },\n  \"email\": \"funcionario@empresa.com\",\n  \"dataAdmissao\": \"01/01/2025\",\n  \"status\": \"ATIVO\",\n  \"tipoContrato\": \"CLT\",\n  \"salarioBase\": 3500\n}",
+              "options": { "raw": { "language": "json" } }
+            },
+            "url": { "raw": "{{baseURL}}/api/v1/funcionarios/salvar", "host": ["{{baseURL}}"], "path": ["api","v1","funcionarios","salvar"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar funcionario",
+          "request": { "method": "PUT", "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"id\": 1,\n  \"pessoa\": { \"id\": 1 },\n  \"email\": \"novo@empresa.com\",\n  \"status\": \"ATIVO\",\n  \"salarioBase\": 4000,\n  \"numeroVersao\": 0\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{baseURL}}/api/v1/funcionarios/atualizar", "host": ["{{baseURL}}"], "path": ["api","v1","funcionarios","atualizar"] } },
+          "response": []
+        },
+        {
+          "name": "Excluir funcionario",
+          "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/funcionarios/excluir?id=1", "host": ["{{baseURL}}"], "path": ["api","v1","funcionarios","excluir"], "query": [{"key":"id","value":"1"}] } },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Enderecos",
+      "item": [
+        { "name": "Listar todos", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/enderecos/listarTodos", "host": ["{{baseURL}}"], "path": ["api","v1","enderecos","listarTodos"] } }, "response": [] },
+        { "name": "Buscar por id", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/enderecos/buscarPorId?id=1", "host": ["{{baseURL}}"], "path": ["api","v1","enderecos","buscarPorId"], "query": [{"key":"id","value":"1"}] } }, "response": [] },
+        { "name": "Criar endereco", "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"pessoa\": { \"id\": 1 },\n  \"logradouro\": \"Av. Brasil\",\n  \"cep\": \"59000000\",\n  \"numero\": \"100\",\n  \"bairro\": \"Centro\",\n  \"cidade\": \"Natal\",\n  \"estado\": \"RN\",\n  \"enderecoPrincipal\": true\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{baseURL}}/api/v1/enderecos", "host": ["{{baseURL}}"], "path": ["api","v1","enderecos"] } }, "response": [] },
+        { "name": "Atualizar endereco", "request": { "method": "PUT", "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"id\": 1,\n  \"pessoa\": { \"id\": 1 },\n  \"logradouro\": \"Av. Brasil\",\n  \"cep\": \"59000000\",\n  \"numero\": \"101\",\n  \"bairro\": \"Centro\",\n  \"cidade\": \"Natal\",\n  \"estado\": \"RN\",\n  \"enderecoPrincipal\": false,\n  \"numeroVersao\": 0\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{baseURL}}/api/v1/enderecos", "host": ["{{baseURL}}"], "path": ["api","v1","enderecos"] } }, "response": [] },
+        { "name": "Excluir endereco", "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/enderecos/1", "host": ["{{baseURL}}"], "path": ["api","v1","enderecos","1"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Perfis",
+      "item": [
+        { "name": "Listar todos", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/perfis/listarTodos", "host": ["{{baseURL}}"], "path": ["api","v1","perfis","listarTodos"] } }, "response": [] },
+        { "name": "Buscar por id", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/perfis/buscarPorId?id=1", "host": ["{{baseURL}}"], "path": ["api","v1","perfis","buscarPorId"], "query": [{"key":"id","value":"1"}] } }, "response": [] },
+        { "name": "Criar perfil", "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"GESTOR\",\n  \"permissoes\": \"ADMIN\",\n  \"acessoGlobal\": true\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{baseURL}}/api/v1/perfis/salvar", "host": ["{{baseURL}}"], "path": ["api","v1","perfis","salvar"] } }, "response": [] },
+        { "name": "Atualizar perfil", "request": { "method": "PUT", "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"id\": 1,\n  \"nome\": \"ADMINISTRADOR\",\n  \"permissoes\": \"ADMIN\",\n  \"acessoGlobal\": false\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{baseURL}}/api/v1/perfis/atualizar", "host": ["{{baseURL}}"], "path": ["api","v1","perfis","atualizar"] } }, "response": [] },
+        { "name": "Excluir perfil", "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/perfis/excluir?id=1", "host": ["{{baseURL}}"], "path": ["api","v1","perfis","excluir"], "query": [{"key":"id","value":"1"}] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Permissoes",
+      "item": [
+        { "name": "Listar todos", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/permissoes", "host": ["{{baseURL}}"], "path": ["api","v1","permissoes"] } }, "response": [] },
+        { "name": "Buscar por id", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/permissoes/1", "host": ["{{baseURL}}"], "path": ["api","v1","permissoes","1"] } }, "response": [] },
+        { "name": "Criar permissao", "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"nome\": \"FUNCIONARIO_READ\",\n  \"descricao\": \"Permite ler funcionários\",\n  \"tipo\": \"READ\",\n  \"recurso\": \"funcionarios\",\n  \"ativo\": true\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{baseURL}}/api/v1/permissoes", "host": ["{{baseURL}}"], "path": ["api","v1","permissoes"] } }, "response": [] },
+        { "name": "Atualizar permissao", "request": { "method": "PUT", "header": [ { "key": "Authorization", "value": "{{authToken}}" }, { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"id\": 1,\n  \"nome\": \"FUNCIONARIO_READ\",\n  \"descricao\": \"Permite ler funcionários (atualizada)\",\n  \"tipo\": \"READ\",\n  \"recurso\": \"funcionarios\",\n  \"ativo\": true\n}", "options": { "raw": { "language": "json" } } }, "url": { "raw": "{{baseURL}}/api/v1/permissoes/1", "host": ["{{baseURL}}"], "path": ["api","v1","permissoes","1"] } }, "response": [] },
+        { "name": "Excluir permissao", "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/permissoes/1", "host": ["{{baseURL}}"], "path": ["api","v1","permissoes","1"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Acessos",
+      "item": [
+        { "name": "Conceder acesso", "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/acessos/conceder?perfilId=1&permissaoId=1", "host": ["{{baseURL}}"], "path": ["api","v1","acessos","conceder"], "query": [{"key":"perfilId","value":"1"},{"key":"permissaoId","value":"1"}] } }, "response": [] },
+        { "name": "Listar acessos por perfil", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/acessos/perfil/1", "host": ["{{baseURL}}"], "path": ["api","v1","acessos","perfil","1"] } }, "response": [] },
+        { "name": "Listar acessos ativos", "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/acessos/perfil/1/ativos", "host": ["{{baseURL}}"], "path": ["api","v1","acessos","perfil","1","ativos"] } }, "response": [] },
+        { "name": "Revogar acesso", "request": { "method": "POST", "header": [ { "key": "Authorization", "value": "{{authToken}}" } ], "url": { "raw": "{{baseURL}}/api/v1/acessos/1/revogar", "host": ["{{baseURL}}"], "path": ["api","v1","acessos","1","revogar"] } }, "response": [] }
+      ]
+    }
+  ],
+  "variable": [
+    { "key": "baseURL", "value": "http://localhost:8080", "type": "default" },
+    { "key": "authToken", "value": "", "type": "default" }
+  ]
+}
